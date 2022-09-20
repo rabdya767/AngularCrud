@@ -14,11 +14,14 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SelectRequiredValidatorDirective } from './shared/select-required-validator.directive';
 import { ConfirmEqualValidatorDirective } from './shared/confirm-equal-validator.directive';
 import { EmployeeService } from './employees/employee.service';
+import { AnimationComponent } from './animation/animation.component';
+import { DisplayEmployeeComponent } from './employees/display-employee.component';
 
 
 const appRoutes: Routes = [
   { path: 'list', component: ListEmployeesComponent },
   { path: 'create', component: CreateEmployeeComponent },
+  { path: 'animation', component: AnimationComponent},
   { path: '', redirectTo: '/list', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -30,7 +33,9 @@ const appRoutes: Routes = [
     CreateEmployeeComponent,
     PageNotFoundComponent,
     SelectRequiredValidatorDirective,
-    ConfirmEqualValidatorDirective
+    ConfirmEqualValidatorDirective,
+    AnimationComponent,
+    DisplayEmployeeComponent
   ],
   imports: [
     BrowserModule,
