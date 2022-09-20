@@ -89,4 +89,8 @@ export class EmployeeService {
     getEmployees(): Employee[] {
         return this.listEmployees;
     }
+
+    saveEmployee(employee: Employee){
+        this.listEmployees.push(employee);
+    }
 }

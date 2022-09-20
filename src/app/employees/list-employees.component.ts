@@ -8,7 +8,10 @@ import { EmployeeService } from './employee.service';
   styleUrls: ['./list-employees.component.css']
 })
 export class ListEmployeesComponent implements OnInit {
-  employees: Employee[] | undefined;
+  employees!: Employee[];
+  employeeToDisplay!: Employee;
+  private arrayIndex: number = 1;
+  dataFromChild!: Employee;
   constructor(private _employeeService: EmployeeService) {
 
   }
@@ -98,6 +101,21 @@ export class ListEmployeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.employees = this._employeeService.getEmployees();
+    this.employeeToDisplay = this.employees[0];
   }
 
+  nextEmployee(): void {
+    if (this.arrayIndex < this.employees.length) {
+      this.employeeToDisplay = this.employees[this.arrayIndex];
+      this.arrayIndex++;
+    } else {
+      this.employeeToDisplay = this.employees[0];
+      this.arrayIndex = 1;
+    }
+  }
+
+  handleNotify(eventData: Employee): void {
+    this.dataFromChild = eventData;
+    this.dataFromChild.name = eventData.name.toUpperCase();
+  }
 }

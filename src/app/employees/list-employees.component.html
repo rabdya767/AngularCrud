@@ -1,68 +1,16 @@
-<div class="panel panel-primary" *ngFor="let employee of employees">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{ employee.name | uppercase }}</h3>
-  </div>
-  <div class="panel-body">
-    <div class="col-xs-10">
-      <div class="row vertical-align">
-        <div class="col-xs-4">
-          <img
-            class="imageClass"
-            [src]="employee.photoPath"
-            alt="EmployeePhoto"
-          />
-        </div>
-        <div class="col-xs-8">
-          <div class="row">
-            <div class="col-xs-6"><h4>Id</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.id }}</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xs-6"><h4>Date Of Birth</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.dateOfBirth | date }}</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xs-6"><h4>Phone Number</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.phoneNumber || "--" }}</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xs-6"><h4>Email</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.email || "--" }}</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xs-6"><h4>Department</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.department }}</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xs-6"><h4>Active</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.isActive }}</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xs-6"><h4>Contact Preference</h4></div>
-            <div class="col-xs-6">
-              <h4>: {{ employee.contactPreference }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<h1 *ngIf="dataFromChild">
+  {{ dataFromChild.name }}
+</h1>
+<h2 #h2Var></h2>
+<div *ngFor="let employee of employees">
+  <div (click)="h2Var.innerHTML = childComponent.employee.name">
+    <app-display-employee
+      [employee]="employee"
+      (notify)="handleNotify($event)"
+      #childComponent
+    ></app-display-employee>
   </div>
 </div>
+<!-- <button (click)="nextEmployee()" class="btn btn-primary">View Next Employee</button>
+<br><br>
+<app-display-employee [employee]="employeeToDisplay"></app-display-employee> -->
