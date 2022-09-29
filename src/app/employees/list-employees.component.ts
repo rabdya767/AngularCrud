@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Employee } from '../models/employee.module';
 import { EmployeeService } from './employee.service';
 
@@ -9,10 +10,27 @@ import { EmployeeService } from './employee.service';
 })
 export class ListEmployeesComponent implements OnInit {
   employees!: Employee[];
+  filteredEmployees!: Employee[];
+  private _searchTerm: string = "";
   employeeToDisplay!: Employee;
   private arrayIndex: number = 1;
   dataFromChild!: Employee;
-  constructor(private _employeeService: EmployeeService) {
+
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredEmployees = this.filterEmployees(value);
+  }
+
+  filterEmployees(searchTerm: string) {
+    return this.employees.filter(employee =>
+      employee.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+  }
+  constructor(private _employeeService: EmployeeService,
+    private _router: Router) {
 
   }
   // employees: Employee[] = [
@@ -102,6 +120,7 @@ export class ListEmployeesComponent implements OnInit {
   ngOnInit(): void {
     this.employees = this._employeeService.getEmployees();
     this.employeeToDisplay = this.employees[0];
+    this.filteredEmployees = this.employees;
   }
 
   nextEmployee(): void {
@@ -117,5 +136,9 @@ export class ListEmployeesComponent implements OnInit {
   handleNotify(eventData: Employee): void {
     this.dataFromChild = eventData;
     this.dataFromChild.name = eventData.name.toUpperCase();
+  }
+
+  onClick(employeeId: number) {
+    this._router.navigate(['/employees', employeeId])
   }
 }

@@ -1,4 +1,4 @@
-<div class="panel panel-primary" [class.panel-success]="selectedEmployeeId===employee.id" (click)="handleClick()">
+<div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">{{ employee.name | uppercase }}</h3>
   </div>
@@ -64,5 +64,13 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="panel-footer">
+    <a class="btn btn-primary" [routerLink]="['/list', { id: employee.id }]"
+      >Back to list</a
+    >
+    <button class="btn btn-primary pull-right" (click)="viewNextEmployee()">
+      View Next Employee
+    </button>
   </div>
 </div>

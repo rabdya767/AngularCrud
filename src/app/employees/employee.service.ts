@@ -90,7 +90,11 @@ export class EmployeeService {
         return this.listEmployees;
     }
 
-    saveEmployee(employee: Employee){
+    saveEmployee(employee: Employee) {
         this.listEmployees.push(employee);
+    }
+
+    getEmployee(id: number): Employee {
+        return this.listEmployees.find(e => e.id === id)!;
     }
 }

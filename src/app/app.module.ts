@@ -16,12 +16,18 @@ import { ConfirmEqualValidatorDirective } from './shared/confirm-equal-validator
 import { EmployeeService } from './employees/employee.service';
 import { AnimationComponent } from './animation/animation.component';
 import { DisplayEmployeeComponent } from './employees/display-employee.component';
-
+import { CreateEmployeeCanDeactivateGuardService } from './employees/create-employee-can-deactivate-guard.service';
+import { EmployeeDetailsComponent } from './employees/employee-details.component';
+import { EmployeeFilterPipe } from './employees/employee-filter.pipe';
 
 const appRoutes: Routes = [
   { path: 'list', component: ListEmployeesComponent },
-  { path: 'create', component: CreateEmployeeComponent },
-  { path: 'animation', component: AnimationComponent},
+  {
+    path: 'create', component: CreateEmployeeComponent,
+    canDeactivate: [CreateEmployeeCanDeactivateGuardService]
+  },
+  { path: 'animation', component: AnimationComponent },
+  { path: 'employees/:id', component: EmployeeDetailsComponent },
   { path: '', redirectTo: '/list', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -35,7 +41,9 @@ const appRoutes: Routes = [
     SelectRequiredValidatorDirective,
     ConfirmEqualValidatorDirective,
     AnimationComponent,
-    DisplayEmployeeComponent
+    DisplayEmployeeComponent,
+    EmployeeDetailsComponent,
+    EmployeeFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -47,7 +55,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
   ],
   providers: [
-    EmployeeService
+    EmployeeService,
+    CreateEmployeeCanDeactivateGuardService
   ],
   bootstrap: [AppComponent]
 })

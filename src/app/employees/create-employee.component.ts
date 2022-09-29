@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -12,7 +12,7 @@ import { EmployeeService } from './employee.service';
   styleUrls: ['./create-employee.component.css']
 })
 export class CreateEmployeeComponent implements OnInit {
-
+  @ViewChild('employeeForm') public createEmployeeForm!: NgForm;
   name: string = "";
   email: string = "";
   gender: string = "";
@@ -25,8 +25,8 @@ export class CreateEmployeeComponent implements OnInit {
   photoPath: string = "";
   previewPhoto: boolean = false;
 
-  password:string="";
-  confirmPassword:string="";
+  password: string = "";
+  confirmPassword: string = "";
 
   department: Department[] = [
     { id: 1, name: "Batter" },
@@ -49,8 +49,8 @@ export class CreateEmployeeComponent implements OnInit {
     password: this.password,
     confirmPassword: this.confirmPassword,
   }
-  constructor(private _employeeService:EmployeeService,
-              private _router: Router) {
+  constructor(private _employeeService: EmployeeService,
+    private _router: Router) {
     this.datePickerConfig = Object.assign({},
       {
         containerClass: 'theme-dark-blue',
@@ -67,8 +67,10 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   saveEmployee(): void {
-    console.log(this._employeeService);
-    this._employeeService.saveEmployee(this.employee);
+    // console.log(this._employeeService);
+    const newEmployee:Employee= Object.assign({},this.employee)
+    this._employeeService.saveEmployee(newEmployee);
+    this.createEmployeeForm.reset();  
     this._router.navigate(['list']);
   }
 }
