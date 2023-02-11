@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee.module';
 import { EmployeeService } from './employee.service';
 
@@ -30,8 +30,14 @@ export class ListEmployeesComponent implements OnInit {
       employee.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
   }
   constructor(private _employeeService: EmployeeService,
-    private _router: Router) {
-
+    private _router: Router,
+    private _route: ActivatedRoute) {
+      this.employees = this._route.snapshot.data['employeeList'];
+      if (this._route.snapshot.queryParamMap.has("searchTerm")) {
+        this.searchTerm = (this._route.snapshot.queryParamMap.get("searchTerm"))!
+      } else {
+        this.filteredEmployees = this.employees;
+      }
   }
   // employees: Employee[] = [
   //   {
@@ -139,6 +145,8 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   onClick(employeeId: number) {
-    this._router.navigate(['/employees', employeeId])
+    this._router.navigate(['/employees', employeeId], {
+      queryParams: { 'searchTerm': this.searchTerm, 'testParam': 'testValue' }
+    })
   }
 }
